@@ -1,5 +1,6 @@
 package com.example.application
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -45,6 +46,12 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 Toast.makeText(this, "Successful sign in!", Toast.LENGTH_SHORT).show()
+
+                // start messages activity
+                val i = Intent(this, MessagesActivity::class.java)
+                // close previous activity
+                i.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(i)
             }
     }
 }

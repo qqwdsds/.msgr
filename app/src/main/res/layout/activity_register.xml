@@ -7,25 +7,35 @@
     android:layout_height="match_parent"
     android:background="@color/lightCaramel">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/select_photo_button"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="45dp"
-        android:src="@drawable/kolobok"
+        android:background="@drawable/select_photo"
+        android:hint="@string/choose_picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription,ImageContrastCheck"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/select_photo_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="45dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_input"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/select_photo_button">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/usernameEdit"

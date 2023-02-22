@@ -1,3 +1,5 @@
 package com.example.application
 
-class User(val userId: String, val username: String)
+import android.net.Uri
+
+class User(val userId: String, val username: String, val profileImageUrl: String)
