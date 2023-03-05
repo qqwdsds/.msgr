@@ -1,11 +1,9 @@
 package com.example.application
 
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,12 +45,14 @@ class RegisterActivity : AppCompatActivity() {
 
         // register button
         binding.registerButton.setOnClickListener {
-            performRegister()
+            Log.d(tag, "Trying to register")
+
+            completeRegister()
         }
 
         // "Already have an account?" functionality
         binding.alreadyHaveAccountTextView.setOnClickListener {
-            Log.d("Main Activity", "Trying to login")
+            Log.d(tag, "Trying to login")
 
             // launch login activity
             startActivity(Intent(this, LoginActivity::class.java))
@@ -84,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     //register button functionality
-    private fun performRegister() {
+    private fun completeRegister() {
         _email = binding.emailEdit.text.toString()
         _password = binding.passwordEdit.text.toString()
 
