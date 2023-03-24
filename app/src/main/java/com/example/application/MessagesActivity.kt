@@ -25,7 +25,7 @@ class MessagesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val username = intent.getStringExtra(Keys.USERNAME)
-        binding.usernameTextView.text = username
+        //binding.usernameTextView.text = username
     }
 
     // if user not verify, this method return user to register page

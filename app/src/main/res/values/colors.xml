@@ -7,11 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="lightBlue">#4A69FF</color>
-    <color name="lightGreen">#99CCCC</color>
-    <color name="violet">#3a1694</color>
-    <color name="pink">#ee3cca</color>
-    <color name="lightCaramel">#ebe0b9</color>
-    <color name="darkCaramel">#BDA980</color>
+    <color name="background_color">#B4656F</color>
+    <color name="button_color">#02020B</color>
 
 </resources>

@@ -5,23 +5,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.application.databinding.ActivityMessagesBinding
+import com.example.application.databinding.MessageUserBinding
 
 class NewMessageAdapter : RecyclerView.Adapter<NewMessageAdapter.MessageHolder>()
 {
     private val userList = ArrayList<User>()
 
-    class MessageHolder(item: View) : RecyclerView.ViewHolder(item)
+    class MessageHolder(view: View) : RecyclerView.ViewHolder(view)
     {
+        val binding = MessageUserBinding.bind(view)
+
         fun bind(user: User)
         {
-
+            binding.usernameText.text = user.username
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageHolder
     {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.message_user, parent, false)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val view = layoutInflater.inflate(R.layout.message_user, parent, false)
         return MessageHolder(view)
     }
 
