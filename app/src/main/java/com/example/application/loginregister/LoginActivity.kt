@@ -1,10 +1,11 @@
-package com.example.application
+package com.example.application.loginregister
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.example.application.mainmessenger.MessagesActivity
 import com.example.application.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -13,9 +14,6 @@ import com.google.firebase.ktx.Firebase
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
-
-    private lateinit var _email: String
-    private lateinit var _password: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +27,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun signInButton_OnClick(view: View)
     {
-        _email = binding.emailEdit.text.toString()
-        _password = binding.passwordEdit.text.toString()
+        val _email = binding.emailEdit.text.toString()
+        val _password = binding.passwordEdit.text.toString()
 
         if(_email.isEmpty() || _password.isEmpty())
         {

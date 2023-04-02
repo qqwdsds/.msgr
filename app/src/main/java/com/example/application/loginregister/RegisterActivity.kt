@@ -1,12 +1,19 @@
-package com.example.application
+package com.example.application.loginregister
 
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.children
+import com.example.application.Keys
+import com.example.application.mainmessenger.MessagesActivity
+import com.example.application.R
+import com.example.application.models.User
 import com.example.application.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -77,9 +84,6 @@ class RegisterActivity : AppCompatActivity() {
             binding.selectPhotoImage.setImageURI(it)
             binding.selectPhotoButton.alpha = 0f
 
-            /*val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, it)
-            val bitmapDrawable = BitmapDrawable(bitmap)
-            binding.selectPhotoButton.setBackgroundDrawable(bitmapDrawable)*/
         }
     }
 
@@ -107,6 +111,10 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
+        // turn on progressbar and turn off elements state
+        binding.progressbar.visibility = View.VISIBLE
+        elementState(false)
+
         // Firebase: add user
         auth.createUserWithEmailAndPassword(_email, _password) // reg user (email && password)
             .addOnCompleteListener {
@@ -116,10 +124,22 @@ class RegisterActivity : AppCompatActivity() {
                 uploadImageToDatabaseStorage() // download image to storage
             }
             .addOnFailureListener {
+                // turn off progressbar and turn on elements state
+                binding.progressbar.visibility = View.GONE
+                elementState(true)
+
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
     }
-    
+
+    // change element state
+    private fun elementState(state: Boolean){
+        val layout = findViewById<ConstraintLayout>(R.id.registerLayout)
+        for(view in layout.children){
+            view.isEnabled = state
+        }
+    }
+
     private fun uploadImageToDatabaseStorage() {
         if (_image == null) return
 
@@ -143,13 +163,12 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun saveUserToDataBase(imageRef: String) {
         val uid = auth.uid
-        val ref = dataBase.getReference("/users/${uid}")
+        val ref = dataBase.getReference("users/$uid")
 
         val user = User(uid!!, _username, imageRef)
         ref.setValue(user)
             .addOnSuccessListener{
                 Log.d(tag, "User has been added to database")
-
 
                 // start messages activity
                 val i = Intent(this, MessagesActivity::class.java)

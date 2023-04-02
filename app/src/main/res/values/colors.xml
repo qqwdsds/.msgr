@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background_color">#B4656F</color>
     <color name="button_color">#02020B</color>
+    <color name="toolbar_color">#02020B</color>
+    <color name="text_color">#02020B</color>
 
 </resources>
