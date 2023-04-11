@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/actionbar"
-        layout="@layout/contacts_actionbar"/>
+        layout="@layout/actionbar_contacts"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view_contacts"

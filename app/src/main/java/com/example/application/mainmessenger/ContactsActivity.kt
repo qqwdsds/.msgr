@@ -1,5 +1,6 @@
 package com.example.application.mainmessenger
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -26,7 +27,8 @@ class ContactsActivity : AppCompatActivity()
         binding = ActivityContactsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        findViewById<ImageView>(R.id.arrow_back).setOnClickListener {
+        // back button
+        findViewById<ImageView>(R.id.contacts_arrow_back).setOnClickListener {
             finish()
         }
 
@@ -35,21 +37,31 @@ class ContactsActivity : AppCompatActivity()
         getUsers()
     }
 
+
+    // get users from the database and add them to the adapter
     private fun getUsers(){
         val ref = FirebaseDatabase.getInstance().getReference("users")
 
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot)
             {
-                // get all items from database
+                // get all users from database
                 snapshot.children.forEach{
                     val user = it.getValue(User::class.java)
 
                     if(user != null)
                     {
+                        // add to the adapter
                         adapter.add(UserItem(user))
                     }
+                }
 
+                // start chat log activity
+                adapter.setOnItemClickListener{item, view ->
+                    val i = Intent(this@ContactsActivity, ChatLogActivity::class.java)
+                    startActivity(i)
+
+                    finish()
                 }
             }
 

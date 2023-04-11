@@ -57,7 +57,7 @@
             android:drawableEnd="@drawable/image_user"
             android:hint="@string/username"
             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_."
-            android:inputType="textFilter"
+            android:inputType="text"
             android:maxLines="1"
             tools:ignore="TextContrastCheck" />
 

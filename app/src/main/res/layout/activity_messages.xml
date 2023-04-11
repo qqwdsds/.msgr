@@ -11,6 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/actionbar"
+            layout="@layout/actionbar_messages" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcView"
             android:layout_width="0dp"
@@ -19,10 +23,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/actionbar" />
-
-        <include
-            android:id="@+id/actionbar"
-            layout="@layout/messages_actionbar" />
 
         <ImageButton
             android:id="@+id/button_new_message"

@@ -41,6 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableEnd="@drawable/image_email"
+            android:maxLines="1"
+            android:inputType="text"
             android:hint="@string/email" />
 
     </com.google.android.material.textfield.TextInputLayout>
