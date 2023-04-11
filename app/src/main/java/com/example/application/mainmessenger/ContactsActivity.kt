@@ -58,7 +58,9 @@ class ContactsActivity : AppCompatActivity()
 
                 // start chat log activity
                 adapter.setOnItemClickListener{item, view ->
+                    val userItem = item as UserItem
                     val i = Intent(this@ContactsActivity, ChatLogActivity::class.java)
+                    i.putExtra(USERNAME_KEY, userItem.user.username)
                     startActivity(i)
 
                     finish()
@@ -71,5 +73,9 @@ class ContactsActivity : AppCompatActivity()
             }
 
         })
+    }
+
+    companion object {
+        val USERNAME_KEY = "username_key"
     }
 }

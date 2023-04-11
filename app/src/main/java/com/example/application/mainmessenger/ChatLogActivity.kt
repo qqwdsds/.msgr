@@ -3,6 +3,7 @@ package com.example.application.mainmessenger
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.application.R
 import com.example.application.databinding.ActivityChatLogBinding
@@ -22,6 +23,10 @@ class ChatLogActivity : AppCompatActivity()
         binding = ActivityChatLogBinding.inflate(layoutInflater).also{
             setContentView(it.root)
         }
+
+        // username in actionbar
+        val username = intent.getStringExtra(ContactsActivity.USERNAME_KEY)
+        findViewById<TextView>(R.id.chat_log_username).text = username
 
         // back button
         findViewById<ImageView>(R.id.chat_log_arrow_back).setOnClickListener {
