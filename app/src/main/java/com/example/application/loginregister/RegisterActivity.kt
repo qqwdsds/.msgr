@@ -42,8 +42,9 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = ActivityRegisterBinding.inflate(layoutInflater).also{
+            setContentView(it.root)
+        }
 
         // Initialize Firebase Auth
         auth = Firebase.auth

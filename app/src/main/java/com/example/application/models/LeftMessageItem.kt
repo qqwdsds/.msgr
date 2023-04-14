@@ -6,11 +6,11 @@ import com.example.application.R
 import com.example.application.databinding.MessageLeftBinding
 import com.xwray.groupie.viewbinding.BindableItem
 
-class LeftMessageItem: BindableItem<MessageLeftBinding>()
+class LeftMessageItem(val message: String): BindableItem<MessageLeftBinding>()
 {
     override fun bind(viewBinding: MessageLeftBinding, position: Int)
     {
-        //TODO("Not yet implemented")
+        viewBinding.chatMessageText.text = message
     }
 
     override fun getLayout(): Int

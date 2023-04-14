@@ -14,8 +14,7 @@
         android:id="@+id/chat_log_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:listitem="@layout/message_left"
-        tools:itemCount="20"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/message_edit_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"

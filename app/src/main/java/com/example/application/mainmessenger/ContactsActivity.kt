@@ -60,7 +60,7 @@ class ContactsActivity : AppCompatActivity()
                 adapter.setOnItemClickListener{item, view ->
                     val userItem = item as UserItem
                     val i = Intent(this@ContactsActivity, ChatLogActivity::class.java)
-                    i.putExtra(USERNAME_KEY, userItem.user.username)
+                    i.putExtra(USER_KEY, userItem.user)
                     startActivity(i)
 
                     finish()
@@ -76,6 +76,6 @@ class ContactsActivity : AppCompatActivity()
     }
 
     companion object {
-        val USERNAME_KEY = "username_key"
+        val USER_KEY = "username_key"
     }
 }

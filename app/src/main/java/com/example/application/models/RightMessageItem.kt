@@ -5,11 +5,11 @@ import com.example.application.R
 import com.example.application.databinding.MessageRightBinding
 import com.xwray.groupie.viewbinding.BindableItem
 
-class RightMessageItem: BindableItem<MessageRightBinding>()
+class RightMessageItem(val message: String): BindableItem<MessageRightBinding>()
 {
     override fun bind(viewBinding: MessageRightBinding, position: Int)
     {
-        //TODO("Not yet implemented")
+        viewBinding.chatMessageText.text = message
     }
 
     override fun getLayout(): Int {

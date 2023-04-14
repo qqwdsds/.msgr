@@ -1,7 +1,11 @@
 package com.example.application.models
 
 import android.net.Uri
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-class User(val userId: String, val username: String, val profileImageUrl: String){
+@Parcelize
+class User(val userId: String, val username: String, val profileImageUrl: String): Parcelable
+{
     constructor(): this("", "","")
 }
