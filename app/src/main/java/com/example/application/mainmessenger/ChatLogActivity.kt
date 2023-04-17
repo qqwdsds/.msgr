@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.application.Keys
 import com.example.application.R
 import com.example.application.databinding.ActivityChatLogBinding
 import com.example.application.models.LeftMessageItem
@@ -17,6 +18,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupieAdapter
 
 class ChatLogActivity : AppCompatActivity()
@@ -34,7 +36,7 @@ class ChatLogActivity : AppCompatActivity()
             setContentView(it.root)
         }
 
-        setupActionBar()
+        setupStateBar()
 
         backButton()
 
@@ -52,7 +54,7 @@ class ChatLogActivity : AppCompatActivity()
     private fun getMessages()
     {
         val fromId = FirebaseAuth.getInstance().uid
-        val toId = intent.getParcelableExtra<User>(ContactsActivity.USER_KEY)?.userId
+        val toId = intent.getParcelableExtra<User>(Keys.USER_KEY)?.userId
 
         val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
@@ -70,7 +72,7 @@ class ChatLogActivity : AppCompatActivity()
                         adapter.add(RightMessageItem(messageInfo.text))
                     }
                     else{
-                        val user = intent.getParcelableExtra<User>(ContactsActivity.USER_KEY)
+                        val user = intent.getParcelableExtra<User>(Keys.USER_KEY)
                         if(user != null){
                             adapter.add(LeftMessageItem(messageInfo.text, user))
                         }
@@ -79,6 +81,9 @@ class ChatLogActivity : AppCompatActivity()
                         }
                     }
                 }
+
+                // scroll RecyclerView to new messages
+                binding.chatLogRecyclerView.scrollToPosition(adapter.itemCount - 1)
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) { }
@@ -104,7 +109,7 @@ class ChatLogActivity : AppCompatActivity()
         }
 
         // get recipient id
-        val user = intent.getParcelableExtra<User>(ContactsActivity.USER_KEY)
+        val user = intent.getParcelableExtra<User>(Keys.USER_KEY)
         val toId = user?.userId
         if (toId == null)
         {
@@ -152,11 +157,19 @@ class ChatLogActivity : AppCompatActivity()
         }
     }
 
-    private fun setupActionBar()
+    private fun setupStateBar()
     {
-        val user = intent.getParcelableExtra<User>(ContactsActivity.USER_KEY)
+        val user = intent.getParcelableExtra<User>(Keys.USER_KEY)
 
         findViewById<TextView>(R.id.chat_log_username).text = user!!.username
+
+        val imageView = findViewById<ImageView>(R.id.chat_log_image)
+
+        Picasso.get()
+            .load(user.profileImageUrl)
+            .fit()
+            .centerInside()
+            .into(imageView)
     }
 
     private fun initAdapter()

@@ -4,10 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import com.example.application.Keys
 import com.example.application.R
 import com.example.application.databinding.ActivityContactsBinding
 import com.example.application.models.User
 import com.example.application.models.UserItem
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -51,8 +53,11 @@ class ContactsActivity : AppCompatActivity()
 
                     if(user != null)
                     {
-                        // add to the adapter
-                        adapter.add(UserItem(user))
+                        if(user.userId != FirebaseAuth.getInstance().uid)
+                        {
+                            // add to the adapter
+                            adapter.add(UserItem(user))
+                        }
                     }
                 }
 
@@ -60,7 +65,7 @@ class ContactsActivity : AppCompatActivity()
                 adapter.setOnItemClickListener{item, view ->
                     val userItem = item as UserItem
                     val i = Intent(this@ContactsActivity, ChatLogActivity::class.java)
-                    i.putExtra(USER_KEY, userItem.user)
+                    i.putExtra(Keys.USER_KEY, userItem.user)
                     startActivity(i)
 
                     finish()
@@ -68,9 +73,5 @@ class ContactsActivity : AppCompatActivity()
             }
             override fun onCancelled(error: DatabaseError) { }
         })
-    }
-
-    companion object {
-        val USER_KEY = "username_key"
     }
 }

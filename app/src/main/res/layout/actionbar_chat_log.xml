@@ -15,6 +15,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/chat_log_image"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:src="@drawable/kolobok"
+        app:layout_constraintStart_toEndOf="@id/chat_log_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/chat_log_arrow_back"
+        app:layout_constraintTop_toTopOf="@id/chat_log_arrow_back"/>
+
     <TextView
         android:id="@+id/chat_log_username"
         android:layout_width="wrap_content"
@@ -23,8 +32,8 @@
         android:text="Chat"
         android:textColor="@color/white"
         android:textSize="18dp"
-        app:layout_constraintStart_toEndOf="@id/chat_log_arrow_back"
-        app:layout_constraintBottom_toBottomOf="@id/chat_log_arrow_back"
-        app:layout_constraintTop_toTopOf="@id/chat_log_arrow_back" />
+        app:layout_constraintStart_toEndOf="@id/chat_log_image"
+        app:layout_constraintBottom_toBottomOf="@id/chat_log_image"
+        app:layout_constraintTop_toTopOf="@id/chat_log_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

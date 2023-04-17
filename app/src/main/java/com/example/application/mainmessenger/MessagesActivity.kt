@@ -4,29 +4,23 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.application.Keys
 import com.example.application.R
 import com.example.application.databinding.ActivityMessagesBinding
 import com.example.application.loginregister.RegisterActivity
 import com.example.application.models.ChatItem
 import com.example.application.models.MessageInfo
 import com.example.application.models.User
-import com.example.application.models.UserItem
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
-import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupieAdapter
 
@@ -39,6 +33,9 @@ class MessagesActivity : AppCompatActivity()
 
     private val adapter = GroupieAdapter()
 
+    // save every latest message using userId key
+    private val userMessagesMap = HashMap<String, MessageInfo>()
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -48,10 +45,7 @@ class MessagesActivity : AppCompatActivity()
         binding = ActivityMessagesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // TODO: fix RecyclerView
-
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        adjustRecyclerView()
 
         getLatestMessages()
 
@@ -74,21 +68,45 @@ class MessagesActivity : AppCompatActivity()
 
     }
 
-    fun getLatestMessages() {
+    private fun adjustRecyclerView() {
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
+        adapter.setOnItemClickListener { item, view ->
+            val chatItem = item as ChatItem
+
+            val i = Intent(this@MessagesActivity, ChatLogActivity::class.java)
+            i.putExtra(Keys.USER_KEY, chatItem.getUser())
+            startActivity(i)
+        }
+    }
+
+    private fun refreshRecyclerView() {
+        adapter.clear()
+        userMessagesMap.values.forEach { message ->
+            adapter.add(ChatItem(message))
+        }
+    }
+
+    private fun getLatestMessages() {
         val curentUserUid = FirebaseAuth.getInstance().uid
 
         val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$curentUserUid")
 
         ref.addChildEventListener(object: ChildEventListener{
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val messageInfo = snapshot.getValue(MessageInfo::class.java)
-                if(messageInfo == null) return
+                val messageInfo = snapshot.getValue(MessageInfo::class.java) ?: return
 
-                Log.d("msg", "try to set message item")
-                adapter.add(ChatItem(messageInfo))
+                userMessagesMap[snapshot.key!!] = messageInfo   // save latest message
+                refreshRecyclerView()
             }
 
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) { }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val messageInfo = snapshot.getValue(MessageInfo::class.java) ?: return
+
+                userMessagesMap[snapshot.key!!] = messageInfo   // save latest message
+                refreshRecyclerView()
+            }
 
             override fun onChildRemoved(snapshot: DataSnapshot) { }
 

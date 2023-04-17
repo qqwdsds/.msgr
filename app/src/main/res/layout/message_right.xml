@@ -4,16 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/chat_user_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/kolobok"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        app:civ_border_width="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/chat_message_text"
@@ -22,13 +12,14 @@
         android:text="placeholder"
         android:textColor="#FFFFFF"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
         android:paddingStart="13dp"
         android:paddingEnd="13dp"
         android:paddingTop="7dp"
         android:paddingBottom="7dp"
         android:maxWidth="250dp"
         android:background="@drawable/style_message"
-        app:layout_constraintEnd_toStartOf="@id/chat_user_image"
-        app:layout_constraintTop_toTopOf="@id/chat_user_image"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
