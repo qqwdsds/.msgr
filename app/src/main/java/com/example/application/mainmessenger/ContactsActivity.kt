@@ -66,12 +66,7 @@ class ContactsActivity : AppCompatActivity()
                     finish()
                 }
             }
-
-            override fun onCancelled(error: DatabaseError)
-            {
-
-            }
-
+            override fun onCancelled(error: DatabaseError) { }
         })
     }
 

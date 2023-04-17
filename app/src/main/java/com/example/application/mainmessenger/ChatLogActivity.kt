@@ -51,15 +51,16 @@ class ChatLogActivity : AppCompatActivity()
 
     private fun getMessages()
     {
-        val ref = FirebaseDatabase.getInstance().getReference("/messages")
-        Log.d(chatLogActivity, "\"messages\" path: $ref")
+        val fromId = FirebaseAuth.getInstance().uid
+        val toId = intent.getParcelableExtra<User>(ContactsActivity.USER_KEY)?.userId
+
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
         //listen all messages from database
         ref.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?)
             {
                 val messageInfo = snapshot.getValue(MessageInfo::class.java)
-                Log.d(chatLogActivity, "MessageInfo: ${messageInfo}")
 
                 // add chat log RecyclerView
                 if (messageInfo != null)
@@ -69,7 +70,13 @@ class ChatLogActivity : AppCompatActivity()
                         adapter.add(RightMessageItem(messageInfo.text))
                     }
                     else{
-                        adapter.add(LeftMessageItem(messageInfo.text))
+                        val user = intent.getParcelableExtra<User>(ContactsActivity.USER_KEY)
+                        if(user != null){
+                            adapter.add(LeftMessageItem(messageInfo.text, user))
+                        }
+                        else {
+                            Log.d(chatLogActivity, "Load user picture is failed")
+                        }
                     }
                 }
             }
@@ -87,12 +94,6 @@ class ChatLogActivity : AppCompatActivity()
 
     private fun sendMessage()
     {
-        // database folder reference for save message data
-        val ref = FirebaseDatabase.getInstance().getReference("messages").push()
-
-        // message
-        val message = binding.messageEditText.text.toString()
-
         // get sender id
         val fromId = FirebaseAuth.getInstance().uid
         if (fromId == null)
@@ -112,14 +113,35 @@ class ChatLogActivity : AppCompatActivity()
             return
         }
 
+        // database folders reference for save user messages data
+        val currentUserRef = FirebaseDatabase.getInstance().getReference("user-messages/$fromId/$toId").push()
+        val toUserRef = FirebaseDatabase.getInstance().getReference("user-messages/$toId/$fromId").push()
+
+        // message
+        val message = binding.messageEditText.text.toString()
+
+        if(message.isEmpty()) return
+
         // create MessageInfo object to load message to database
-        val messageInfo = MessageInfo(ref.key!!, message, System.currentTimeMillis(), toId, fromId)
+        val messageInfo = MessageInfo(currentUserRef.key!!, message, System.currentTimeMillis(), toId, fromId)
 
         // load message to database
-        ref.setValue(messageInfo)
+        currentUserRef.setValue(messageInfo)
             .addOnSuccessListener {
-                Log.d(chatLogActivity, "Message has been saved to database. Key: ${ref.key}")
+                Log.d(chatLogActivity, "Message has been saved to database. Key: ${currentUserRef.key}")
+
+                binding.messageEditText.text.clear()                                                  // clear EditText text
+                binding.chatLogRecyclerView.scrollToPosition(adapter.itemCount - 1)          // scroll RecyclerView to the last message
             }
+
+        toUserRef.setValue(messageInfo)
+
+        // add latest message to a database
+        val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
+        latestMessageRef.setValue(messageInfo)
+
+        val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
+        latestMessageToRef.setValue(messageInfo)
     }
 
     private fun backButton()

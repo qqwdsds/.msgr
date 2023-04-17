@@ -5,6 +5,7 @@ import com.example.application.R
 import com.example.application.databinding.MessageRightBinding
 import com.xwray.groupie.viewbinding.BindableItem
 
+// class for GroupieAdapter
 class RightMessageItem(val message: String): BindableItem<MessageRightBinding>()
 {
     override fun bind(viewBinding: MessageRightBinding, position: Int)

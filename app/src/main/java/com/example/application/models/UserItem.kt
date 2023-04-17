@@ -2,13 +2,14 @@ package com.example.application.models
 
 import android.view.View
 import com.example.application.R
-import com.example.application.databinding.MessageUserBinding
+import com.example.application.databinding.ActivityContactsItemBinding
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.viewbinding.BindableItem
 
-class UserItem(val user: User): BindableItem<MessageUserBinding>()
+// class for GroupieAdapter
+class UserItem(val user: User): BindableItem<ActivityContactsItemBinding>()
 {
-    override fun bind(viewBinding: MessageUserBinding, position: Int)
+    override fun bind(viewBinding: ActivityContactsItemBinding, position: Int)
     {
         viewBinding.usernameText.text = user.username
         Picasso.get().load(user.profileImageUrl).into(viewBinding.userImage)
@@ -16,12 +17,12 @@ class UserItem(val user: User): BindableItem<MessageUserBinding>()
 
     override fun getLayout(): Int
     {
-        return R.layout.message_user
+        return R.layout.activity_contacts_item
     }
 
-    override fun initializeViewBinding(view: View): MessageUserBinding
+    override fun initializeViewBinding(view: View): ActivityContactsItemBinding
     {
-        return MessageUserBinding.bind(view)
+        return ActivityContactsItemBinding.bind(view)
     }
 
 }

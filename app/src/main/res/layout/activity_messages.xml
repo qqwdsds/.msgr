@@ -16,9 +16,11 @@
             layout="@layout/actionbar_messages" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcView"
+            android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            tools:listitem="@layout/activity_messages_item"
+            tools:itemCount="5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +44,7 @@
             android:layout_marginTop="93dp"
             android:text="no messages yet"
             android:textColor="@color/text_color"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/actionbar" />

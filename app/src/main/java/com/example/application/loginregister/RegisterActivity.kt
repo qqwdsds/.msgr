@@ -32,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var dataBase: FirebaseDatabase
     private lateinit var dataBaseStorage: FirebaseStorage
 
-    private var _username = "username"
+    private lateinit var _username: String
     private lateinit var _email: String
     private lateinit var _password: String
     private var _image: Uri? = null
