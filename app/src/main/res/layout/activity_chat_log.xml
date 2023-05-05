@@ -4,27 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:windowSoftInputMode="adjustResize"
     tools:context=".mainmessenger.ChatLogActivity">
 
     <include
         android:id="@+id/chat_actionbar"
-        layout="@layout/actionbar_chat_log"/>
+        layout="@layout/actionbar_chat_log"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_log_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@id/send_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_actionbar"/>
+        app:layout_constraintTop_toBottomOf="@id/chat_actionbar"
+        tools:listitem="@layout/message_left"
+        tools:itemCount="5"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/send_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#B3FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">

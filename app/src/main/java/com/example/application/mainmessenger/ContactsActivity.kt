@@ -40,7 +40,7 @@ class ContactsActivity : AppCompatActivity()
     }
 
 
-    // get users from the database and add them to the adapter
+    // get users from the database and add them to the RecyclerView
     private fun getUsers(){
         val ref = FirebaseDatabase.getInstance().getReference("users")
 

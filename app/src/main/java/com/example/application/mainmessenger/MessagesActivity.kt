@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.GravityCompat
@@ -49,30 +51,30 @@ class MessagesActivity : AppCompatActivity()
 
         getLatestMessages()
 
-        val button_logout = findViewById<ImageView>(R.id.button_logout)
-        val button_info = findViewById<ImageView>(R.id.user_info)
-
         binding.buttonNewMessage.setOnClickListener {
             val i = Intent(this, ContactsActivity::class.java)
             startActivity(i)
         }
 
-        button_logout.setOnClickListener {
-            logOut()
-        }
-
         // show user info
+        val button_info = findViewById<ImageView>(R.id.user_info)
         button_info.setOnClickListener {
             showUserInfo()
         }
 
+        binding.navigationView.setNavigationItemSelectedListener {item ->
+            when(item.itemId){
+                R.id.menu_sign_out -> logOut()
+            }
+            true
+        }
     }
 
     private fun adjustRecyclerView() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        adapter.setOnItemClickListener { item, view ->
+        adapter.setOnItemClickListener { item, _ ->
             val chatItem = item as ChatItem
 
             val i = Intent(this@MessagesActivity, ChatLogActivity::class.java)
@@ -86,8 +88,15 @@ class MessagesActivity : AppCompatActivity()
         userMessagesMap.values.forEach { message ->
             adapter.add(ChatItem(message))
         }
+        if(adapter.itemCount < 1){
+            binding.noMessagesText.visibility = View.VISIBLE
+        }
+        else{
+            binding.noMessagesText.visibility = View.GONE
+        }
     }
 
+    // add all latest messages
     private fun getLatestMessages() {
         val curentUserUid = FirebaseAuth.getInstance().uid
 
@@ -131,9 +140,9 @@ class MessagesActivity : AppCompatActivity()
         }
     }
 
+    // show user info in navigation drawer
     private fun showUserInfo() {
         findViewById<DrawerLayout>(R.id.drawler_layout).openDrawer(GravityCompat.START)
-
         val navigation_view_username = findViewById<TextView>(R.id.navigation_view_username)
         val navigation_view_profile_photo =
             findViewById<ImageView>(R.id.navigation_view_user_profile_photo)

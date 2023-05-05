@@ -27,7 +27,7 @@
         android:paddingTop="7dp"
         android:paddingBottom="7dp"
         android:maxWidth="250dp"
-        android:background="@drawable/style_message"
+        android:background="@drawable/receive_message_drawable"
         app:layout_constraintStart_toEndOf="@id/chat_user_image"
         app:layout_constraintTop_toTopOf="@id/chat_user_image"/>
 

@@ -33,8 +33,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var dataBaseStorage: FirebaseStorage
 
     private lateinit var _username: String
-    private lateinit var _email: String
-    private lateinit var _password: String
     private var _image: Uri? = null
 
     private val tag = "Register Activity"
@@ -90,8 +88,8 @@ class RegisterActivity : AppCompatActivity() {
 
     //register button functionality
     private fun completeRegister() {
-        _email = binding.emailEdit.text.toString()
-        _password = binding.passwordEdit.text.toString()
+        val _email = binding.emailEdit.text.toString()
+        val _password = binding.passwordEdit.text.toString()
 
         // First check: email and password
         if (_email.isEmpty() || _password.isEmpty()) {

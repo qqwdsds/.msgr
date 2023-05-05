@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <TextView
         android:id="@+id/chat_message_text"
         android:layout_width="wrap_content"
@@ -18,7 +17,7 @@
         android:paddingTop="7dp"
         android:paddingBottom="7dp"
         android:maxWidth="250dp"
-        android:background="@drawable/style_message"
+        android:background="@drawable/send_message_drawable"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

@@ -15,16 +15,29 @@
             android:id="@+id/actionbar"
             layout="@layout/actionbar_messages" />
 
+        <TextView
+            android:id="@+id/no_messages_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="no messages yet"
+            android:textStyle="bold"
+            android:layout_marginTop="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actionbar"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            tools:listitem="@layout/activity_messages_item"
-            tools:itemCount="5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/actionbar" />
+            app:layout_constraintTop_toBottomOf="@id/actionbar"
+            app:layout_constraintVertical_bias="0.0"
+            tools:itemCount="5"
+            tools:listitem="@layout/activity_messages_item" />
 
         <ImageButton
             android:id="@+id/button_new_message"
@@ -56,6 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/user_info"/>
+        app:headerLayout="@layout/user_info"
+        app:menu="@menu/menu"/>
     
 </androidx.drawerlayout.widget.DrawerLayout>
